@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Personal IT portfolio of Zbigniew Łamaszewski: Linux, Docker, web development, networking, databases and certificates."
+    />
+    <title>Zbigniew Łamaszewski | IT Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Go to hero section">
+        <span class="brand-mark">ZL</span>
+        <span>Zbigniew Łamaszewski</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero section" id="home">
+        <div class="hero-content">
+          <p class="eyebrow">IT portfolio</p>
+          <h1>Zbigniew Łamaszewski</h1>
+          <p class="hero-role">IT student / Junior IT / Docker, Linux, Web, Networking</p>
+          <p class="hero-text">
+            I build practical IT lab projects, learn modern infrastructure tools, and connect
+            system administration with web development, APIs, databases and network fundamentals.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">View projects</a>
+            <a class="button button-secondary" href="#certificates">View certificates</a>
+          </div>
+        </div>
+
+        <div class="hero-panel glass-card" aria-label="Portfolio highlights">
+          <div class="terminal-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <pre><code>$ docker ps
+ubuntu-server     running
+nginx-web         online
+wordpress-db      healthy
+portainer         active
+
+$ skills --focus
+linux docker networking web sql</code></pre>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2>Learning by building real IT environments.</h2>
+        </div>
+        <div class="glass-card about-card">
+          <p>
+            I am developing my IT skills through hands-on work with Linux, Docker, networking,
+            web development and databases. My focus is on understanding how services are deployed,
+            connected, monitored and maintained, from Ubuntu servers and containers to APIs,
+            SQL projects and responsive websites.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="section-heading">
+          <p class="eyebrow">Skills</p>
+          <h2>Technical stack</h2>
+        </div>
+        <div class="skills-grid">
+          <article class="glass-card skill-card">Linux</article>
+          <article class="glass-card skill-card">Docker</article>
+          <article class="glass-card skill-card">Portainer</article>
+          <article class="glass-card skill-card">WordPress</article>
+          <article class="glass-card skill-card">HTML/CSS/JavaScript</article>
+          <article class="glass-card skill-card">SQL</article>
+          <article class="glass-card skill-card">Networking</article>
+          <article class="glass-card skill-card">GitHub</article>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="section-heading">
+          <p class="eyebrow">Projects</p>
+          <h2>Infrastructure, web and database practice</h2>
+        </div>
+        <div class="projects-grid">
+          <article class="glass-card project-card">
+            <span class="project-number">01</span>
+            <h3>Docker server in VirtualBox with Ubuntu</h3>
+            <p>Local server lab for practicing Linux administration, Docker setup and service deployment.</p>
+          </article>
+          <article class="glass-card project-card">
+            <span class="project-number">02</span>
+            <h3>Nginx container</h3>
+            <p>Containerized web server configured for static hosting and reverse-proxy learning.</p>
+          </article>
+          <article class="glass-card project-card">
+            <span class="project-number">03</span>
+            <h3>Portainer dashboard</h3>
+            <p>Docker management interface for monitoring containers, images, networks and volumes.</p>
+          </article>
+          <article class="glass-card project-card">
+            <span class="project-number">04</span>
+            <h3>WordPress + MariaDB in Docker</h3>
+            <p>Multi-container CMS stack with persistent database storage and isolated networking.</p>
+          </article>
+          <article class="glass-card project-card">
+            <span class="project-number">05</span>
+            <h3>Spring Boot API</h3>
+            <p>Backend API practice focused on endpoints, application structure and service logic.</p>
+          </article>
+          <article class="glass-card project-card">
+            <span class="project-number">06</span>
+            <h3>SQL project</h3>
+            <p>Database exercises with tables, relations, queries and data analysis fundamentals.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section certificates-section" id="certificates">
+        <div class="section-heading centered">
+          <p class="eyebrow">Certificates</p>
+          <h2>Course certificates</h2>
+          <p class="section-lead">
+            Browse the certificate coverflow, swipe on mobile, or open any certificate in fullscreen.
+          </p>
+        </div>
+
+        <div class="carousel-shell glass-card">
+          <button class="carousel-arrow carousel-prev" type="button" aria-label="Previous certificate">
+            &larr;
+          </button>
+
+          <div class="certificate-carousel" id="certificateCarousel" aria-live="polite"></div>
+
+          <button class="carousel-arrow carousel-next" type="button" aria-label="Next certificate">
+            &rarr;
+          </button>
+        </div>
+
+        <p class="carousel-caption" id="carouselCaption"></p>
+        <div class="carousel-dots" id="carouselDots" aria-label="Certificate navigation"></div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h2>Let us connect</h2>
+        </div>
+        <div class="contact-card glass-card">
+          <a href="mailto:lamaszewski.zl@gmail.com">lamaszewski.zl@gmail.com</a>
+          <a href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub: ZLamaszew</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Certificate preview">
+      <button class="lightbox-close" type="button" aria-label="Close certificate preview">&times;</button>
+      <button class="lightbox-arrow lightbox-prev" type="button" aria-label="Previous certificate">
+        &larr;
+      </button>
+      <figure class="lightbox-content">
+        <img id="lightboxImage" src="" alt="" />
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+      <button class="lightbox-arrow lightbox-next" type="button" aria-label="Next certificate">
+        &rarr;
+      </button>
+    </div>
+
+    <footer class="site-footer">
+      <p>Ready for GitHub Pages, Docker or Nginx static hosting.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

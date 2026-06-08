@@ -1,0 +1,13 @@
+﻿# System files
+.DS_Store
+Thumbs.db
+*.tmp
+.~lock.*
+
+# Editor folders
+.vscode/
+.idea/
+
+# Local/private notes
+notes/
+private/
