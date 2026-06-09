@@ -1,12 +1,14 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Personal IT portfolio of Zbigniew Łamaszewski: Linux, Docker, web development, networking, databases and certificates."
+      content="Portfolio IT Zbigniewa Łamaszewskiego: Linux, Docker, web development, sieci, bazy danych i certyfikaty."
     />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
     <title>Zbigniew Łamaszewski | IT Portfolio</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -30,10 +32,16 @@
         <a href="#certificates">Certificates</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <button class="language-toggle" type="button" aria-label="Change language" aria-pressed="false">
+        EN
+      </button>
     </header>
 
     <main>
       <section class="hero section" id="home">
+        <canvas class="hero-network" id="heroNetwork" aria-hidden="true"></canvas>
+
         <div class="hero-content">
           <p class="eyebrow">IT portfolio</p>
           <h1>Zbigniew Łamaszewski</h1>
@@ -171,6 +179,36 @@ linux docker networking web sql</code></pre>
           <a href="mailto:lamaszewski.zl@gmail.com">lamaszewski.zl@gmail.com</a>
           <a href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub: ZLamaszew</a>
         </div>
+
+        <form class="contact-form glass-card" id="contactForm">
+          <div class="form-copy">
+            <p class="eyebrow" data-contact-eyebrow>Quick message</p>
+            <h3 data-contact-title>Send a short recruitment message</h3>
+            <p data-contact-lead>
+              Fill in the form and your email client will open with a ready message.
+            </p>
+          </div>
+
+          <label>
+            <span data-contact-name-label>Name</span>
+            <input id="contactName" name="name" type="text" autocomplete="name" required />
+          </label>
+
+          <label>
+            <span data-contact-email-label>Email</span>
+            <input id="contactEmail" name="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label>
+            <span data-contact-message-label>Message</span>
+            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+          </label>
+
+          <button class="button button-primary" type="submit" data-contact-submit>
+            Open email message
+          </button>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 

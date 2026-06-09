@@ -1,12 +1,14 @@
 ﻿# IT Portfolio - Zbigniew Łamaszewski
 
 Statyczna strona portfolio prezentująca umiejętności, projekty IT oraz certyfikaty.
+Strona działa w dwóch wersjach językowych: polskiej i angielskiej.
 
 ## Zawartość
 
 - `index.html` - struktura strony
 - `style.css` - style i responsywny wygląd portfolio
 - `script.js` - menu mobilne, karuzela certyfikatów i podgląd pełnoekranowy
+- przełącznik języka PL/EN z zapamiętywaniem wyboru w przeglądarce
 - `assets/certificates/` - grafiki certyfikatów
 
 ## Sekcje strony
