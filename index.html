@@ -36,6 +36,9 @@
       <button class="language-toggle" type="button" aria-label="Change language" aria-pressed="false">
         EN
       </button>
+      <button class="theme-toggle" type="button" aria-label="Toggle light mode" aria-pressed="false">
+        Theme
+      </button>
     </header>
 
     <main>
@@ -46,6 +49,9 @@
           <p class="eyebrow">IT portfolio</p>
           <h1>Zbigniew Łamaszewski</h1>
           <p class="hero-role">IT student / Junior IT / Docker, Linux, Web, Networking</p>
+          <p class="typing-line">
+            Currently learning <span id="typingText">Junior IT</span><span class="typing-caret">|</span>
+          </p>
           <p class="hero-text">
             I build practical IT lab projects, learn modern infrastructure tools, and connect
             system administration with web development, APIs, databases and network fundamentals.
@@ -111,36 +117,114 @@ linux docker networking web sql</code></pre>
           <p class="eyebrow">Projects</p>
           <h2>Infrastructure, web and database practice</h2>
         </div>
+        <div class="project-filters" aria-label="Project filters">
+          <button class="filter-button is-active" type="button" data-filter="all">All</button>
+          <button class="filter-button" type="button" data-filter="python">Python</button>
+          <button class="filter-button" type="button" data-filter="java">Java</button>
+          <button class="filter-button" type="button" data-filter="sql">SQL</button>
+          <button class="filter-button" type="button" data-filter="networking">Networking</button>
+          <button class="filter-button" type="button" data-filter="docker">Docker</button>
+        </div>
         <div class="projects-grid">
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="docker linux">
             <span class="project-number">01</span>
             <h3>Docker server in VirtualBox with Ubuntu</h3>
             <p>Local server lab for practicing Linux administration, Docker setup and service deployment.</p>
+            <div class="project-tech"><span>Docker</span><span>Linux</span><span>VirtualBox</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
           </article>
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="docker networking">
             <span class="project-number">02</span>
             <h3>Nginx container</h3>
             <p>Containerized web server configured for static hosting and reverse-proxy learning.</p>
+            <div class="project-tech"><span>Nginx</span><span>Docker</span><span>Networking</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
           </article>
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="docker">
             <span class="project-number">03</span>
             <h3>Portainer dashboard</h3>
             <p>Docker management interface for monitoring containers, images, networks and volumes.</p>
+            <div class="project-tech"><span>Portainer</span><span>Docker</span><span>DevOps</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
           </article>
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="docker sql">
             <span class="project-number">04</span>
             <h3>WordPress + MariaDB in Docker</h3>
             <p>Multi-container CMS stack with persistent database storage and isolated networking.</p>
+            <div class="project-tech"><span>Docker</span><span>MariaDB</span><span>SQL</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
           </article>
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="java sql">
             <span class="project-number">05</span>
             <h3>Spring Boot API</h3>
             <p>Backend API practice focused on endpoints, application structure and service logic.</p>
+            <div class="project-tech"><span>Java</span><span>Spring Boot</span><span>API</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
           </article>
-          <article class="glass-card project-card">
+          <article class="glass-card project-card" data-tech="sql python">
             <span class="project-number">06</span>
             <h3>SQL project</h3>
             <p>Database exercises with tables, relations, queries and data analysis fundamentals.</p>
+            <div class="project-tech"><span>SQL</span><span>Python</span><span>Data</span></div>
+            <a class="project-link" href="https://github.com/ZLamaszew" target="_blank" rel="noreferrer">GitHub</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="learning">
+        <div class="section-heading">
+          <p class="eyebrow">Currently learning</p>
+          <h2>Skills in progress</h2>
+        </div>
+        <div class="learning-grid">
+          <article class="skill-progress glass-card" data-progress="45">
+            <div><strong>Java</strong><span>45%</span></div>
+            <i></i>
+          </article>
+          <article class="skill-progress glass-card" data-progress="55">
+            <div><strong>SQL</strong><span>55%</span></div>
+            <i></i>
+          </article>
+          <article class="skill-progress glass-card" data-progress="50">
+            <div><strong>Linux</strong><span>50%</span></div>
+            <i></i>
+          </article>
+          <article class="skill-progress glass-card" data-progress="45">
+            <div><strong>Docker</strong><span>45%</span></div>
+            <i></i>
+          </article>
+          <article class="skill-progress glass-card" data-progress="50">
+            <div><strong>Cisco</strong><span>50%</span></div>
+            <i></i>
+          </article>
+          <article class="skill-progress glass-card" data-progress="55">
+            <div><strong>Python</strong><span>55%</span></div>
+            <i></i>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="timeline">
+        <div class="section-heading">
+          <p class="eyebrow">Timeline</p>
+          <h2>My IT Learning Path</h2>
+        </div>
+        <div class="timeline">
+          <article class="timeline-item glass-card">
+            <span>2024</span>
+            <p>Start learning web development</p>
+          </article>
+          <article class="timeline-item glass-card">
+            <span>2025</span>
+            <p>Python, SQL, Linux and Docker projects</p>
+          </article>
+          <article class="timeline-item glass-card">
+            <span>2026</span>
+            <p>Networking, Cisco Packet Tracer and Java Spring Boot</p>
+          </article>
+          <article class="timeline-item glass-card">
+            <span>Current</span>
+            <p>Building IT portfolio and preparing for junior IT roles</p>
           </article>
         </div>
       </section>

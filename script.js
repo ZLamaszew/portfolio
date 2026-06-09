@@ -4,6 +4,12 @@ const languageToggle = document.querySelector(".language-toggle");
 const contactForm = document.querySelector("#contactForm");
 const formStatus = document.querySelector("#formStatus");
 const heroCanvas = document.querySelector("#heroNetwork");
+const terminalCode = document.querySelector(".hero-panel code");
+const themeToggle = document.querySelector(".theme-toggle");
+const typingText = document.querySelector("#typingText");
+const filterButtons = document.querySelectorAll(".filter-button");
+const projectCards = document.querySelectorAll(".project-card");
+const progressCards = document.querySelectorAll(".skill-progress");
 
 const translations = {
   pl: {
@@ -119,6 +125,22 @@ linux docker networking web sql`,
 };
 
 let currentLanguage = localStorage.getItem("portfolioLanguage") || "pl";
+let currentTheme = localStorage.getItem("portfolioTheme") || "dark";
+let terminalTimer = 0;
+let typingTimer = 0;
+let typingWordIndex = 0;
+let typingCharIndex = 0;
+let isDeletingTyping = false;
+
+const typingWords = [
+  "Junior IT",
+  "Networking",
+  "Java / Spring Boot",
+  "SQL",
+  "Python",
+  "Docker",
+  "Cisco Packet Tracer",
+];
 
 const contactCopy = {
   pl: {
@@ -238,6 +260,24 @@ function setText(selector, value) {
   if (element) element.textContent = value;
 }
 
+function typeTerminal(text) {
+  if (!terminalCode) return;
+
+  window.clearInterval(terminalTimer);
+  terminalCode.textContent = "";
+  terminalCode.classList.add("terminal-cursor");
+
+  let index = 0;
+  terminalTimer = window.setInterval(() => {
+    terminalCode.textContent = text.slice(0, index);
+    index += 1;
+
+    if (index > text.length) {
+      window.clearInterval(terminalTimer);
+    }
+  }, 12);
+}
+
 function applyContactLanguage(language) {
   const copy = contactCopy[language];
   setText("[data-contact-eyebrow]", copy.eyebrow);
@@ -247,6 +287,15 @@ function applyContactLanguage(language) {
   setText("[data-contact-email-label]", copy.email);
   setText("[data-contact-message-label]", copy.message);
   setText("[data-contact-submit]", copy.submit);
+}
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem("portfolioTheme", theme);
+  document.body.classList.toggle("light-theme", theme === "light");
+  themeToggle.textContent = theme === "light" ? "Dark" : "Light";
+  themeToggle.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+  themeToggle.setAttribute("aria-label", theme === "light" ? "Switch to dark mode" : "Switch to light mode");
 }
 
 function applyLanguage(language) {
@@ -269,7 +318,7 @@ function applyLanguage(language) {
   setText(".hero-text", copy.heroText);
   setText(".hero-actions .button-primary", copy.heroPrimary);
   setText(".hero-actions .button-secondary", copy.heroSecondary);
-  setText(".hero-panel code", copy.terminal);
+  typeTerminal(copy.terminal);
 
   setText("#about .eyebrow", copy.aboutEyebrow);
   setText("#about h2", copy.aboutHeading);
@@ -419,6 +468,22 @@ languageToggle.addEventListener("click", () => {
   applyLanguage(currentLanguage === "pl" ? "en" : "pl");
 });
 
+themeToggle.addEventListener("click", () => {
+  applyTheme(currentTheme === "light" ? "dark" : "light");
+});
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const filter = button.dataset.filter;
+
+    filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+    projectCards.forEach((card) => {
+      const technologies = card.dataset.tech || "";
+      card.classList.toggle("is-hidden", filter !== "all" && !technologies.includes(filter));
+    });
+  });
+});
+
 lightbox.addEventListener("click", (event) => {
   if (event.target === lightbox) {
     closeLightbox();
@@ -558,5 +623,103 @@ function initHeroNetwork() {
   animate();
 }
 
+function initSpotlight() {
+  const setSpotlight = (x, y) => {
+    document.body.style.setProperty("--spotlight-x", `${x}px`);
+    document.body.style.setProperty("--spotlight-y", `${y}px`);
+  };
+
+  window.addEventListener("pointermove", (event) => {
+    setSpotlight(event.clientX, event.clientY);
+  });
+}
+
+function initTiltCards() {
+  const cards = document.querySelectorAll(".glass-card");
+
+  cards.forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.classList.add("is-tilting");
+      card.style.setProperty("--tilt-x", `${y * -7}deg`);
+      card.style.setProperty("--tilt-y", `${x * 7}deg`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.classList.remove("is-tilting");
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+    });
+  });
+}
+
+function initTypingEffect() {
+  if (!typingText) return;
+
+  window.clearTimeout(typingTimer);
+
+  const word = typingWords[typingWordIndex];
+  const current = word.slice(0, typingCharIndex);
+  typingText.textContent = current;
+
+  if (!isDeletingTyping && typingCharIndex < word.length) {
+    typingCharIndex += 1;
+    typingTimer = window.setTimeout(initTypingEffect, 80);
+    return;
+  }
+
+  if (!isDeletingTyping && typingCharIndex === word.length) {
+    isDeletingTyping = true;
+    typingTimer = window.setTimeout(initTypingEffect, 1150);
+    return;
+  }
+
+  if (isDeletingTyping && typingCharIndex > 0) {
+    typingCharIndex -= 1;
+    typingTimer = window.setTimeout(initTypingEffect, 42);
+    return;
+  }
+
+  isDeletingTyping = false;
+  typingWordIndex = (typingWordIndex + 1) % typingWords.length;
+  typingTimer = window.setTimeout(initTypingEffect, 220);
+}
+
+function initRevealAnimations() {
+  const revealItems = document.querySelectorAll(".section, .project-card, .skill-card, .timeline-item, .skill-progress");
+
+  revealItems.forEach((item) => item.classList.add("reveal"));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("is-visible");
+
+        if (entry.target.classList.contains("skill-progress")) {
+          const progress = entry.target.dataset.progress || "0";
+          entry.target.style.setProperty("--progress", `${progress}%`);
+          entry.target.classList.add("is-filled");
+        }
+      });
+    },
+    { threshold: 0.14 }
+  );
+
+  revealItems.forEach((item) => observer.observe(item));
+}
+
+progressCards.forEach((card) => {
+  card.style.setProperty("--progress", "0%");
+});
+
 initHeroNetwork();
+initSpotlight();
+initTiltCards();
+initTypingEffect();
+initRevealAnimations();
+applyTheme(currentTheme);
 applyLanguage(currentLanguage);
