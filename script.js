@@ -127,6 +127,7 @@ linux docker networking web sql`,
 let currentLanguage = localStorage.getItem("portfolioLanguage") || "pl";
 let currentTheme = localStorage.getItem("portfolioTheme") || "dark";
 let terminalTimer = 0;
+let terminalLoopText = "";
 let typingTimer = 0;
 let typingWordIndex = 0;
 let typingCharIndex = 0;
@@ -263,19 +264,31 @@ function setText(selector, value) {
 function typeTerminal(text) {
   if (!terminalCode) return;
 
-  window.clearInterval(terminalTimer);
+  window.clearTimeout(terminalTimer);
+  terminalLoopText = text;
   terminalCode.textContent = "";
   terminalCode.classList.add("terminal-cursor");
 
   let index = 0;
-  terminalTimer = window.setInterval(() => {
+  const writeNext = () => {
+    if (text !== terminalLoopText) return;
+
     terminalCode.textContent = text.slice(0, index);
     index += 1;
 
     if (index > text.length) {
-      window.clearInterval(terminalTimer);
+      terminalTimer = window.setTimeout(() => {
+        if (text === terminalLoopText) {
+          typeTerminal(text);
+        }
+      }, 2400);
+      return;
     }
-  }, 12);
+
+    terminalTimer = window.setTimeout(writeNext, 12);
+  };
+
+  writeNext();
 }
 
 function applyContactLanguage(language) {
