@@ -11,6 +11,10 @@ const filterButtons = document.querySelectorAll(".filter-button");
 const projectCards = document.querySelectorAll(".project-card");
 const progressCards = document.querySelectorAll(".skill-progress");
 
+const SUPABASE_URL = "https://vvxsojniceiyszjaqlg.supabase.co";
+const SUPABASE_KEY = "sb_publishable_yBR8WNQEYVf2q3-rWKzTuw_3KeeplQp";
+const CONTACT_TABLE = "messages";
+
 const translations = {
   pl: {
     pageTitle: "Zbigniew Łamaszewski | Portfolio IT",
@@ -147,24 +151,26 @@ const contactCopy = {
   pl: {
     eyebrow: "Szybka wiadomość",
     title: "Wyślij krótką wiadomość rekrutacyjną",
-    lead: "Wypełnij formularz, a program pocztowy otworzy gotową wiadomość do wysłania.",
+    lead: "Wypełnij formularz, a wiadomość trafi bezpośrednio do mojej bazy kontaktowej.",
     name: "Imię i nazwisko",
     email: "Email",
     message: "Wiadomość",
-    submit: "Otwórz wiadomość email",
-    status: "Otwieram gotową wiadomość email...",
-    subject: "Kontakt rekrutacyjny z portfolio",
+    submit: "Wyślij wiadomość",
+    status: "Wysyłam wiadomość...",
+    success: "Dziękuję. Wiadomość została wysłana.",
+    error: "Nie udało się wysłać wiadomości. Spróbuj ponownie albo napisz email.",
   },
   en: {
     eyebrow: "Quick message",
     title: "Send a short recruitment message",
-    lead: "Fill in the form and your email client will open with a ready message.",
+    lead: "Fill in the form and the message will be saved directly in my contact database.",
     name: "Name",
     email: "Email",
     message: "Message",
-    submit: "Open email message",
-    status: "Opening a ready email message...",
-    subject: "Recruitment contact from portfolio",
+    submit: "Send message",
+    status: "Sending message...",
+    success: "Thank you. Your message has been sent.",
+    error: "The message could not be sent. Please try again or use email.",
   },
 };
 
@@ -531,23 +537,42 @@ carousel.addEventListener("touchend", () => {
   isDragging = false;
 });
 
-contactForm.addEventListener("submit", (event) => {
+contactForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const copy = contactCopy[currentLanguage];
   const name = document.querySelector("#contactName").value.trim();
   const email = document.querySelector("#contactEmail").value.trim();
   const message = document.querySelector("#contactMessage").value.trim();
-  const body = [
-    `${copy.name}: ${name}`,
-    `${copy.email}: ${email}`,
-    "",
-    message,
-  ].join("\n");
+  const submitButton = contactForm.querySelector("[data-contact-submit]");
 
-  const mailtoUrl = `mailto:lamaszewski.zl@gmail.com?subject=${encodeURIComponent(copy.subject)}&body=${encodeURIComponent(body)}`;
   formStatus.textContent = copy.status;
-  window.location.href = mailtoUrl;
+  submitButton.disabled = true;
+
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/${CONTACT_TABLE}`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({ name, email, message }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Supabase insert failed: ${response.status}`);
+    }
+
+    contactForm.reset();
+    formStatus.textContent = copy.success;
+  } catch (error) {
+    console.error(error);
+    formStatus.textContent = copy.error;
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
 function initHeroNetwork() {
