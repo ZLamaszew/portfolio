@@ -550,7 +550,7 @@ contactForm.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
 
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/${CONTACT_TABLE}`, {
+    const sendMessage = (payload) => fetch(`${SUPABASE_URL}/rest/v1/${CONTACT_TABLE}`, {
       method: "POST",
       headers: {
         apikey: SUPABASE_KEY,
@@ -558,8 +558,14 @@ contactForm.addEventListener("submit", async (event) => {
         "Content-Type": "application/json",
         Prefer: "return=minimal",
       },
-      body: JSON.stringify({ name, email, message }),
+      body: JSON.stringify(payload),
     });
+
+    let response = await sendMessage({ name, email, message });
+
+    if (!response.ok) {
+      response = await sendMessage({ Nazwa: name, Email: email, "wiadomość": message });
+    }
 
     if (!response.ok) {
       throw new Error(`Supabase insert failed: ${response.status}`);
