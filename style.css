@@ -16,11 +16,11 @@
 body.light-theme {
   --bg: #f6f8fb;
   --bg-soft: #e9eef6;
-  --panel: rgba(255, 255, 255, 0.78);
+  --panel: rgba(255, 255, 255, 0.9);
   --panel-strong: rgba(255, 255, 255, 0.94);
-  --border: rgba(16, 32, 52, 0.14);
+  --border: rgba(16, 32, 52, 0.2);
   --text: #102033;
-  --muted: #5c6b7c;
+  --muted: #465568;
   --accent: #007fa8;
   --accent-2: #0d9874;
   --accent-3: #d66a16;
@@ -351,6 +351,12 @@ body.light-theme .site-header {
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55), 0 0 45px rgba(55, 216, 255, 0.12);
 }
 
+body.light-theme .glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(16, 32, 52, 0.18);
+  box-shadow: 0 18px 55px rgba(24, 45, 72, 0.13);
+}
+
 .hero-panel {
   position: relative;
   overflow: hidden;
@@ -479,6 +485,17 @@ body.light-theme pre {
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
+body.light-theme .skill-card {
+  color: #102033;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+body.light-theme .skill-card:hover,
+body.light-theme .project-card:hover {
+  border-color: rgba(0, 127, 168, 0.55);
+  background: #ffffff;
+}
+
 .skill-card:hover,
 .project-card:hover {
   border-color: rgba(55, 216, 255, 0.38);
@@ -507,6 +524,14 @@ body.light-theme pre {
   font-weight: 900;
   padding: 0.55rem 0.9rem;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+body.light-theme .filter-button,
+body.light-theme .button-secondary,
+body.light-theme .language-toggle,
+body.light-theme .theme-toggle {
+  background: rgba(255, 255, 255, 0.88);
+  color: #102033;
 }
 
 .filter-button:hover,
@@ -561,6 +586,11 @@ body.light-theme pre {
   font-size: 0.78rem;
   font-weight: 800;
   padding: 0.35rem 0.6rem;
+}
+
+body.light-theme .project-tech span {
+  background: rgba(0, 127, 168, 0.1);
+  color: #102033;
 }
 
 .project-link {
