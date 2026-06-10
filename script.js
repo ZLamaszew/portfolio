@@ -11,8 +11,8 @@ const filterButtons = document.querySelectorAll(".filter-button");
 const projectCards = document.querySelectorAll(".project-card");
 const progressCards = document.querySelectorAll(".skill-progress");
 
-const SUPABASE_URL = "https://vvxsojniceiyszjaqlg.supabase.co";
-const SUPABASE_KEY = "sb_publishable_yBR8WNQEYVf2q3-rWKzTuw_3KeeplQp";
+const SUPABASE_URL = "https://vvsxojniceiyszyjaqlg.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2c3hvam5pY2VpeXN6eWphcWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMDkwMjAsImV4cCI6MjA5NjY4NTAyMH0.XgghkROXYLXPfbcTm6EeUCQt96bS0YwXle3l0PFezVs";
 const CONTACT_TABLE = "messages";
 
 const translations = {
@@ -568,7 +568,8 @@ contactForm.addEventListener("submit", async (event) => {
     }
 
     if (!response.ok) {
-      throw new Error(`Supabase insert failed: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`Supabase insert failed: ${response.status} ${errorText}`);
     }
 
     contactForm.reset();
