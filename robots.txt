@@ -1,3 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
+Sitemap: https://zlamaszew.github.io/portfolio/sitemap.xml
