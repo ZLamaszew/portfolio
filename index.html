@@ -9,6 +9,7 @@
     />
     <title>Zbigniew Łamaszewski | IT Portfolio</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>
     <header class="site-header" aria-label="Main navigation">
@@ -273,18 +274,26 @@ linux docker networking web sql</code></pre>
 
           <label>
             <span data-contact-name-label>Name</span>
-            <input id="contactName" name="name" type="text" autocomplete="name" required />
+            <input id="contactName" name="name" type="text" autocomplete="name" maxlength="80" required />
           </label>
 
           <label>
             <span data-contact-email-label>Email</span>
-            <input id="contactEmail" name="email" type="email" autocomplete="email" required />
+            <input id="contactEmail" name="email" type="email" autocomplete="email" maxlength="120" required />
           </label>
 
           <label>
             <span data-contact-message-label>Message</span>
-            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+            <textarea id="contactMessage" name="message" rows="5" maxlength="1200" required></textarea>
           </label>
+
+          <div class="turnstile-box">
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAADim7WfJoRsgSa3g"
+              data-theme="auto"
+            ></div>
+          </div>
 
           <button class="button button-primary" type="submit" data-contact-submit>
             Send message

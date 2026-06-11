@@ -13,7 +13,12 @@ const progressCards = document.querySelectorAll(".skill-progress");
 
 const SUPABASE_URL = "https://vvsxojniceiyszyjaqlg.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2c3hvam5pY2VpeXN6eWphcWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMDkwMjAsImV4cCI6MjA5NjY4NTAyMH0.XgghkROXYLXPfbcTm6EeUCQt96bS0YwXle3l0PFezVs";
-const CONTACT_TABLE = "messages";
+const CONTACT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/contact-message`;
+const CONTACT_LIMITS = {
+  name: 80,
+  email: 120,
+  message: 1200,
+};
 
 const translations = {
   pl: {
@@ -544,39 +549,59 @@ contactForm.addEventListener("submit", async (event) => {
   const name = document.querySelector("#contactName").value.trim();
   const email = document.querySelector("#contactEmail").value.trim();
   const message = document.querySelector("#contactMessage").value.trim();
+  const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value || "";
   const submitButton = contactForm.querySelector("[data-contact-submit]");
+
+  if (
+    name.length > CONTACT_LIMITS.name ||
+    email.length > CONTACT_LIMITS.email ||
+    message.length > CONTACT_LIMITS.message
+  ) {
+    formStatus.textContent =
+      currentLanguage === "pl"
+        ? "Wiadomosc jest za dluga. Skroc tresc i sprobuj ponownie."
+        : "The message is too long. Please shorten it and try again.";
+    return;
+  }
+
+  if (!turnstileToken) {
+    formStatus.textContent =
+      currentLanguage === "pl"
+        ? "Potwierdz weryfikacje Turnstile i sprobuj ponownie."
+        : "Please complete the Turnstile check and try again.";
+    return;
+  }
 
   formStatus.textContent = copy.status;
   submitButton.disabled = true;
 
   try {
-    const sendMessage = (payload) => fetch(`${SUPABASE_URL}/rest/v1/${CONTACT_TABLE}`, {
+    const response = await fetch(CONTACT_FUNCTION_URL, {
       method: "POST",
       headers: {
         apikey: SUPABASE_KEY,
         Authorization: `Bearer ${SUPABASE_KEY}`,
         "Content-Type": "application/json",
-        Prefer: "return=minimal",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ name, email, message, turnstileToken }),
     });
-
-    let response = await sendMessage({ name, email, message });
-
-    if (!response.ok) {
-      response = await sendMessage({ Nazwa: name, Email: email, "wiadomość": message });
-    }
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Supabase insert failed: ${response.status} ${errorText}`);
+      throw new Error(`Contact function failed: ${response.status} ${errorText}`);
     }
 
     contactForm.reset();
+    if (window.turnstile) {
+      window.turnstile.reset();
+    }
     formStatus.textContent = copy.success;
   } catch (error) {
     console.error(error);
-    formStatus.textContent = copy.error;
+    formStatus.textContent = `${copy.error} (${error.message})`;
+    if (window.turnstile) {
+      window.turnstile.reset();
+    }
   } finally {
     submitButton.disabled = false;
   }
